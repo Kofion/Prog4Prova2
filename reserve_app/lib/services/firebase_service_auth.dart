@@ -24,13 +24,4 @@ class FirebaseServiceAuth {
       print('Erro$e');
     }
   }
-
- // Future<User?> signInWithCredential(AuthCredential creden) async {
- //   try {
- //     UserCredential credential = await _auth.signInWithCredential(creden);
- //     return credential.user;
- //   } catch (e) {
- //     print('erro $e');
- //   }
- // }
 }

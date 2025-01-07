@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:reserve_app/services/depois_eu_uso.dart';
+
 import '../app/styles_app.dart';
+import '../pages/space_details_page.dart';
+import '../services/realtime_service.dart';
 import '../widgets/custom_button.dart';
 
 class CardItem extends StatelessWidget {
@@ -107,9 +109,7 @@ class CardItem extends StatelessWidget {
                                   ),
                                   Icon(_icon()),
                                   Text(
-                                    status,
-                                    //inativo
-                                    //manutenção
+                                    _status(),
                                     style: TextStylesManager.infos,
                                   ),
                                 ],
@@ -120,7 +120,20 @@ class CardItem extends StatelessWidget {
                       ),
                       CustomButton(
                         label: "Ver Detalhes",
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) {
+                              return DetailsPage(
+                                name: name,
+                                capacity: capacity,
+                                availability: availability,
+                                status: status,
+                              );
+                            },
+                          );
+                        },
                         margin: EdgeInsets.symmetric(vertical: 0),
                       )
                     ],
@@ -139,10 +152,15 @@ class CardItem extends StatelessWidget {
       return Icons.check_circle_outline_outlined;
     } else if (status == 'inativo') {
       return Icons.cancel_outlined;
-    } else if (status == 'manutenção') {
-      return Icons.construction_outlined;
     } else {
-      return Icons.abc;
+      return Icons.error;
     }
+  }
+
+  String _status() {
+    if (status != 'ativo' && status != 'inativo') {
+      return 'error';
+    }
+    return status;
   }
 }

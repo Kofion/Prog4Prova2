@@ -13,7 +13,7 @@ abstract class AppRouts {
   static Map<String, WidgetBuilder> routes = {
     loginPage: (context) => LoginPage(),
     signUpPage: (context) => SignUp(),
-    mainPage: (context) =>  MainPage(),
-    reservesPage: (context) => ReservesPage()
+    mainPage: (context) => MainPage(),
+    reservesPage: (context) => ReservesPage(),
   };
 }
