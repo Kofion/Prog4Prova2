@@ -17,14 +17,13 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          //Texto 1 'Seja Bem Vindo'
           Expanded(
             flex: 1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Olá, Bem-Vindo de Volta!!',
+                  'Seja bem vindo!',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
@@ -33,8 +32,6 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-
-          // Parte 2 'Formulario'
           Expanded(
             flex: 3,
             child: SingleChildScrollView(
@@ -61,7 +58,6 @@ class LoginPage extends StatelessWidget {
                         height: 40,
                       ),
                       CustomDivider(),
-                      //BOTAO LOGIN COM GOOGLE
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: SignInButton(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../app/app_routs.dart';
 import '../services/realtime_service.dart';
 import '../widgets/custom_card_item.dart';
@@ -16,8 +15,8 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.blueAccent.shade100,
-        title: Text(
-          'Espaços',
+        title: const Text(
+          'Reservas',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -25,30 +24,30 @@ class MainPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: databaseService.getEspacos(),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: databaseService.streamReservas(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Erro ao carregar os locais.'));
+            return const Center(child: Text('Erro ao carregar as reservas.'));
           } else if (snapshot.hasData) {
-            final locais = snapshot.data!;
+            final reservas = snapshot.data!;
 
             return ListView.builder(
-              itemCount: locais.length,
+              itemCount: reservas.length,
               itemBuilder: (context, index) {
-                final local = locais[index];
+                final reserva = reservas[index];
                 return CardItem(
-                  name: local['nome'],
-                  capacity: local['capacidade'],
-                  status: local['status'],
-                  availability: local['disponibilidade'],
+                  name: reserva['nome'],
+                  capacity: reserva['capacidade'],
+                  status: reserva['status'],
+                  availability: "${reserva['disponibilidade']} horários livres",
                 );
               },
             );
           } else {
-            return Center(child: Text('Nenhum local encontrado.'));
+            return const Center(child: Text('Nenhuma reserva encontrada.'));
           }
         },
       ),
@@ -57,14 +56,13 @@ class MainPage extends StatelessWidget {
         color: Colors.blueAccent.shade100,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          spacing: 10,
           children: [
             CustomIconButton(
               label: 'Home',
               icon: Icons.home_outlined,
               route: AppRouts.mainPage,
             ),
-            VerticalDivider(
+            const VerticalDivider(
               width: 2,
               color: Colors.white,
             ),

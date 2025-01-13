@@ -179,9 +179,7 @@ class _DetailsPageState extends State<DetailsPage> {
           width: 100,
           height: 50,
           decoration: BoxDecoration(
-            color: isSelected
-                ? Colors.grey
-                : Colors.blue.shade300, // Cinza para selecionados
+            color: isSelected ? Colors.grey : Colors.blue.shade300,
             borderRadius: BorderRadius.circular(20),
           ),
           alignment: Alignment.center,
@@ -223,33 +221,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   selectedTimes[time] = !isSelected;
                 });
 
-                try {
-                  final DatabaseReference database =
-                      FirebaseDatabase.instance.ref();
-                  final reservedTimes = selectedTimes.entries
-                      .where((entry) => entry.value)
-                      .map((entry) => entry.key)
-                      .toList();
-
-                  final availability =
-                      times.where((t) => !selectedTimes[t]!).length;
-                  final String newStatus =
-                      availability == 0 ? 'inativo' : 'ativo';
-
-                  await database.child("reservas/${widget.name}").update({
-                    "horarios_reservados": reservedTimes,
-                    "status": newStatus,
-                  });
-
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(isSelected
-                          ? 'Horário desmarcado com sucesso!'
-                          : 'Horário reservado com sucesso!')));
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          'Erro ao atualizar o horário. Tente novamente mais tarde. Erro: $e')));
-                }
+                _updateAvailableTimes();
 
                 Navigator.of(context).pop();
               },
@@ -259,5 +231,36 @@ class _DetailsPageState extends State<DetailsPage> {
         );
       },
     );
+  }
+
+  void _updateAvailableTimes() async {
+    try {
+      final reservedTimes = selectedTimes.entries
+          .where((entry) => entry.value)
+          .map((entry) => entry.key)
+          .toList();
+
+      final availability = times.where((t) => !selectedTimes[t]!).length;
+
+      final String newStatus = availability == 0 ? 'inativo' : 'ativo';
+
+      final DatabaseReference database = FirebaseDatabase.instance.ref();
+
+      final reservationRef = database.child("reservas/${widget.name}");
+      await reservationRef.update({
+        "horarios_reservados": reservedTimes,
+        "status": newStatus,
+        "horarios_livres":
+            times.where((time) => !reservedTimes.contains(time)).toList(),
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Horários atualizados com sucesso!')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao atualizar horários: $e')),
+      );
+    }
   }
 }

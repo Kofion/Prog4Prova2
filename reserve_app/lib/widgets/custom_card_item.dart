@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../app/app_routs.dart';
 import '../app/styles_app.dart';
-import '../pages/details_page.dart';
 import '../services/realtime_service.dart';
 import '../widgets/custom_button.dart';
 
@@ -10,7 +9,7 @@ class CardItem extends StatelessWidget {
   final RealtimeDatabaseService databaseService = RealtimeDatabaseService();
   final String name;
   final int capacity;
-  final int availability;
+  final String availability;
   final String status;
 
   CardItem({
@@ -41,7 +40,6 @@ class CardItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      //TITULO-NOME
                       Text(
                         name,
                         textAlign: TextAlign.center,
@@ -50,7 +48,6 @@ class CardItem extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      //coluna com as informações menores
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -61,7 +58,6 @@ class CardItem extends StatelessWidget {
                               child: Row(
                                 spacing: 5,
                                 children: [
-                                  //CAPACIDADE
                                   Text(
                                     'Capacidade: ',
                                     style: TextStylesManager.infos,
@@ -82,7 +78,6 @@ class CardItem extends StatelessWidget {
                               child: Row(
                                 spacing: 5,
                                 children: [
-                                  //DISPONIBILIDADE
                                   Text(
                                     'Disponibilidade: ',
                                     style: TextStylesManager.infos,
@@ -103,7 +98,6 @@ class CardItem extends StatelessWidget {
                               child: Row(
                                 spacing: 5,
                                 children: [
-                                  //STATUS
                                   Text(
                                     'Status: ',
                                     style: TextStylesManager.infos,

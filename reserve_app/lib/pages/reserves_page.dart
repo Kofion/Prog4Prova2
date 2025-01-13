@@ -19,7 +19,6 @@ class _ReservesPageState extends State<ReservesPage> {
       if (snapshot.exists) {
         final data = snapshot.value as Map<dynamic, dynamic>;
 
-        // Processa as reservas para exibir local, horários e status
         return data.entries.map((entry) {
           final localName = entry.key;
           final reserva = entry.value as Map<dynamic, dynamic>;
@@ -42,6 +41,7 @@ class _ReservesPageState extends State<ReservesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.blue.shade300,
         title: const Text(
           'Minhas Reservas',

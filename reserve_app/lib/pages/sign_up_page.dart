@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
-import '../services/firebase_service_auth.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/custom_button.dart';
 import '../app/app_routs.dart';
-
-//DESSA FORMA OS DADOS DE CADASTRO FICAM NO REALTIME DATABASE
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -17,8 +14,6 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
-
-  final FirebaseServiceAuth _auth = FirebaseServiceAuth();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -39,7 +34,6 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: Column(
         children: [
-          //Texto 1 'Seja Bem Vindo'
           Expanded(
             flex: 1,
             child: Column(
@@ -59,8 +53,6 @@ class _SignUpState extends State<SignUp> {
               ],
             ),
           ),
-
-          // Parte 2 'Formulario'
           Expanded(
             flex: 3,
             child: SingleChildScrollView(
@@ -72,28 +64,24 @@ class _SignUpState extends State<SignUp> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      //NOME DE USUARIO
                       CustomTextFormField(
                         label: 'Nome de Usuário',
                         controller: _usernameController,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         fontSize: 12,
                       ),
-                      //EMAIL
                       CustomTextFormField(
                         label: 'Email',
                         controller: _emailController,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         fontSize: 12,
                       ),
-                      //NUMERO DE TELEFONE
                       CustomTextFormField(
                         label: 'Número de Telefone',
                         controller: _phoneController,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         fontSize: 12,
                       ),
-                      //SENHA
                       CustomTextFormField(
                         label: 'Senha',
                         controller: _passwordController,
